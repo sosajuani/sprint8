@@ -1,0 +1,20 @@
+<%- include ('../partials/head',{title:"perfil"}) %> 
+<%- include("../partials/menuHeader.ejs")  %>
+    <section class="seccion-usuario">
+        <article class="seccion-usuario_perfil">
+            <div class="contenedor-datos-usuario">
+                <div class="contenedor-img_usuario animate__animated">
+                    <img src="/img/avatars/<%= userData.avatars.avatar %>" alt="foto perfil">
+                </div>
+                <div class="mailName">
+                    <p class="name">Nombre: <%= `${userData.first_name}`  %> </p>
+                    <p class="name">Apellido: <%= `${userData.last_name}`  %> </p>
+                    <p class="mail"><%= `Email: ${userData.email}` %> </p>
+                    <% if(userData.id == user.id){ %> 
+                        <div class="recommendedButton"><a href="/perfil/<%= user.id %>/edit">EDITAR PERFIL</a></div>
+                    <% }else{} %>  
+                </div>
+            </div>
+        </article>
+    </section>
+<%- include("../partials/footerBase.ejs")  %>

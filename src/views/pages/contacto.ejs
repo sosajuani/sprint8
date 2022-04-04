@@ -1,0 +1,34 @@
+<%- include("../partials/head.ejs",{title:"Contacto"}) %> 
+<%- include("../partials/menuHeader.ejs") %> 
+    <section class="detailContact">
+        <div class="contContact">
+            <div class="contC1">
+                <h3>CONTACTO</h3>
+                <img src="img/oso.png" alt="oso">
+            </div>
+            <div class="contC2"> 
+                <form class="contactForm" action="/contacto" method="post">
+                    <% if(locals.msgForm === true){ %> 
+                        <div class="successMsg">Mensaje enviado</div>
+                    <% } %>
+                    <input type="text" value="<%= locals.oldData? locals.oldData.name:null %>" placeholder="Nombre" name="name" id="nombre" required />
+                    <% if (locals.errors && locals.errors.name) { %>
+                        <p class="errForm"><%= locals.errors.name.msg %></p>
+                    <% } %>
+                    <input type="email" value="<%= locals.oldData? locals.oldData.email:null %>" placeholder="Email" name="email" id="email" required />
+                    <% if (locals.errors && locals.errors.email) { %>
+                        <p class="errForm"><%= locals.errors.email.msg %></p>
+                    <% } %>
+                    <textarea placeholder="Mensaje" name="message" id="msj" cols="30" rows="10" required><%= locals.oldData? locals.oldData.message:null %></textarea>
+                    <% if (locals.errors && locals.errors.message) { %>
+                        <p class="errForm"><%= locals.errors.message.msg %></p>
+                    <% } %>
+                    <input class="animate__animated pulse" value="Enviar" type="submit">
+                </form>
+                <div class="cajaMapaCont">
+                    <img src="img/mapa.png" alt="mapa">
+                </div>
+            </div>
+        </div>
+    </section>
+<%- include("../partials/footerBase.ejs") %> 
