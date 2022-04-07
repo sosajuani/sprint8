@@ -105,6 +105,12 @@ const controllerProduct={
         res.redirect(`/products/detail/${req.params.id}`)
     },
     productDelete:(req,res)=>{
+        let deleteVisited = Visited.destroy({
+            where:{
+                product_id: req.params.id,
+                user_id: req.session.id
+            }
+        })
         let imgArchive = Image.findOne({where:{id_products:req.params.id}})
         let imageDelete = Image.destroy({where:{ id_products: req.params.id}});
         let productDelete = Product.destroy({where:{ id: req.params.id}});
@@ -133,7 +139,14 @@ const controllerProduct={
         let productConsult = await Product.findByPk(req.params.id,{
             include: ["images","sizes","cats"]
         });
-        res.render('pages/productDetail.ejs',{articulo:productConsult,visitedConsult,orderConsult})
+        let categoryProducts = await Cat.findOne({
+            where: {
+                id: productConsult.cat_id
+            },
+            include: [{association:'products',include:['images','discounts']}]
+        })
+        console.log();
+        res.render('pages/productDetail.ejs',{articulo:productConsult,visitedConsult,orderConsult,categoryProducts: categoryProducts.products})
     },
     recommended: async(req,res)=>{
         let visited=1;
